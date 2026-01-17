@@ -26,12 +26,11 @@ func HandleChoiceA(defaultFile string, outDir string) {
 	if os.IsNotExist(err) {
 		fmt.Println("Le fichier n'existe pas. Nous prendrons par défaut :", defaultFile)
 		fileName = defaultFile
-	}
-
-	fileInfo, err = os.Stat(defaultFile)
-	if os.IsNotExist(err) {
-		fmt.Println("Problème : le fichier par défaut n'existe pas non plus.")
-		return
+		fileInfo, err = os.Stat(fileName)
+		if os.IsNotExist(err) {
+			fmt.Println("Problème : le fichier par défaut n'existe pas non plus.")
+			return
+		}
 	}
 
 	fmt.Printf("Taille du fichier : %d octets\n", fileInfo.Size())
@@ -69,6 +68,7 @@ func HandleChoiceA(defaultFile string, outDir string) {
 	if wordCount > 0 {
 		avgLength = totalLength / wordCount
 	}
+
 	fmt.Printf("Nombre de mots (sans numériques) : %d\n", wordCount)
 	fmt.Printf("Longueur moyenne des mots : %d\n", avgLength)
 

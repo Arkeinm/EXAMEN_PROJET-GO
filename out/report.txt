@@ -1,0 +1,30 @@
+Fichier : out\filtered.txt
+Taille : 206 octets
+Date de modification : 2026-01-17 12:49:22.0549412 +0100 CET
+
+Fichier : out\filtered_not.txt
+Taille : 392 octets
+Date de modification : 2026-01-17 12:49:22.0549412 +0100 CET
+
+Fichier : out\head.txt
+Taille : 212 octets
+Date de modification : 2026-01-17 12:49:39.2887247 +0100 CET
+
+Fichier : out\index.txt
+Taille : 0 octets
+Date de modification : 2026-01-16 16:30:28.335102 +0100 CET
+
+Fichier : out\merged.txt
+Taille : 0 octets
+Date de modification : 2026-01-16 16:30:28.334357 +0100 CET
+
+Fichier : out\report.txt
+Taille : 0 octets
+Date de modification : 2026-01-17 17:52:20.7673944 +0100 CET
+
+Fichier : out\tail.txt
+Taille : 254 octets
+Date de modification : 2026-01-17 12:49:39.2905399 +0100 CET
+
+Nombre de fichiers avec l'extension .txt : 7
+

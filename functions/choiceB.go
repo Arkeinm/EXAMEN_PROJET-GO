@@ -4,110 +4,85 @@ import (
 	"bufio"
 	"fmt"
 	"os"
-	"strings"
 	"path/filepath"
+	"strings"
 )
 
 // Choix B - Analyse multi-fichiers
-// L’utilisateur fourni le nom d’un repertoire
-// 8.	Batch : analyser tous les .txt situé dans un emplacement demandé à l’utilisateur
-// 9.	Rapport global : générer out/report.txt (format libre mais lisible)
-// 10.	Indexation : générer out/index.txt listant (chemin, taille, date)
-// 11.	Fusion : fusionner tous les .txt de base_dir → out/merged.txt
+// 8. Batch : analyser tous les fichiers avec extensions autorisées
+// 9. Rapport global : générer out/report.txt
+// 10. Indexation : générer out/index.txt (chemin, taille, date)
+// 11. Fusion : fusionner tous les fichiers → out/merged.txt
 func HandleChoiceB(extensionsConfig string, outDir string, defaultExt string) {
-	var reportLines []string
-	var indexLines []string
-
+	count := 0
 	reader := bufio.NewReader(os.Stdin)
-	extensions := strings.Split(extensionsConfig, ",")
 
 	fmt.Print("Fournissez un nom de répertoire : ")
-	input, _ := reader.ReadString('\n')
-	dirName := strings.TrimSpace(input)
+	repertoryInput, _ := reader.ReadString('\n')
+	repertoryPath := strings.TrimSpace(repertoryInput)
 
-	dirInfo, err := os.Stat(dirName)
-	if os.IsNotExist(err) || !dirInfo.IsDir() {
-		fmt.Println("Le répertoire n'existe pas.")
+	if repertoryPath == "" {
+		fmt.Printf("Aucun répertoire fourni, utilisation de ./%s comme répertoire par défaut.\n", outDir)
+		repertoryPath = outDir
+	}
+
+	repertoryInfo, err := os.Stat(repertoryPath)
+	if os.IsNotExist(err) {
+		fmt.Println("Le répertoire n'existe pas. Nous prendrons par défaut :", outDir)
+		repertoryPath = outDir
+		repertoryInfo, err = os.Stat(repertoryPath)
+		if os.IsNotExist(err) {
+			fmt.Println("Problème : le répertoire par défaut n'existe pas non plus.")
+			return
+		}
+	}
+
+	if err == nil && !repertoryInfo.IsDir() {
+		fmt.Printf("Erreur : '%s' existe mais n'est pas un répertoire.\n", repertoryPath)
 		return
 	}
 
-	files, err := os.ReadDir(dirName)
+	reportFile, err := os.Create(outDir + "/report.txt")
 	if err != nil {
-		fmt.Println("Erreur lors de la lecture du répertoire :", err)
-		return
-	}
-
-	mergedFile, err := os.Create(outDir + "/merged" + defaultExt)
-	if err != nil {
-		fmt.Println("Erreur création fichier merged"+defaultExt+" :", err)
-		return
-	}
-	defer mergedFile.Close()
-
-	for _, file := range files {
-		if file.IsDir() {
-			continue
-		}
-
-		matched := false
-		for _, ext := range extensions {
-			if strings.HasSuffix(file.Name(), strings.TrimSpace(ext)) {
-				matched = true
-				break
-			}
-		}
-		if !matched {
-			continue
-		}
-
-		filePath := filepath.Join(dirName, file.Name())
-		fileInfo, err := os.Stat(filePath)
-		if err != nil {
-			fmt.Println("Erreur lors de l'obtention des informations du fichier :", err)
-			continue
-		}
-
-		indexLines = append(indexLines, fmt.Sprintf("%s, %d octets, %s", filePath, fileInfo.Size(), fileInfo.ModTime().String()))
-
-		f, err := os.Open(filePath)
-		if err != nil {
-			fmt.Println("Erreur lors de l'ouverture du fichier :", err)
-			continue
-		}
-
-		scanner := bufio.NewScanner(f)
-		lineCount := 0
-		for scanner.Scan() {
-			line := scanner.Text()
-			mergedFile.WriteString(line + "\n")
-			lineCount++
-		}
-		f.Close()
-
-		reportLines = append(reportLines, fmt.Sprintf("Fichier: %s, Lignes: %d", file.Name(), lineCount))
-	}
-
-	reportFile, err := os.Create(outDir + "/report" + defaultExt)
-	if err != nil {
-		fmt.Println("Erreur création fichier report"+defaultExt+" :", err)
+		fmt.Println("Erreur création fichier filtered.txt :", err)
 		return
 	}
 	defer reportFile.Close()
 
-	for _, line := range reportLines {
-		reportFile.WriteString(line + "\n")
+	fmt.Println("Fichier report.txt créé avec succès.")
+
+	error := filepath.WalkDir(repertoryPath, func(path string, d os.DirEntry, err error) error {
+		if err != nil {
+			return nil
+		}
+
+		if d.IsDir() {
+			return nil
+		}
+
+		ext := filepath.Ext(d.Name())
+
+		if ext == defaultExt {
+			count++
+
+			fileInfo, err := d.Info()
+			if err != nil {
+				fmt.Fprintf(reportFile, "Erreur lors de la récupération des informations pour %s: %v\n", path, err)
+				return nil
+			}
+
+			fmt.Fprintf(reportFile, "Fichier : %s\n", path)
+			fmt.Fprintf(reportFile, "Taille : %d octets\n", fileInfo.Size())
+			fmt.Fprintf(reportFile, "Date de modification : %s\n\n", fileInfo.ModTime().String())
+		}
+
+		return nil
+	})
+
+	if error != nil {
+		fmt.Fprintln(os.Stderr, "error:", error)
+		os.Exit(1)
 	}
 
-	indexFile, err := os.Create(outDir + "/index" + defaultExt)
-	if err != nil {
-		fmt.Println("Erreur création fichier index"+defaultExt+" :", err)
-		return
-	}
-	defer indexFile.Close()
-
-	for _, line := range indexLines {
-		indexFile.WriteString(line + "\n")
-	}
-
-	fmt.Println("Analyse terminée. Fichiers générés dans le répertoire ./" + outDir)
+	fmt.Fprintf(reportFile, "Nombre de fichiers avec l'extension %s : %d\n\n", defaultExt, count)
 }
