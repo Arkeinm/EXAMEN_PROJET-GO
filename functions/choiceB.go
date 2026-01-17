@@ -8,13 +8,11 @@ import (
 	"strings"
 )
 
-// Choix B - Analyse multi-fichiers
-// 8. Batch : analyser tous les fichiers avec extensions autorisées
-// 9. Rapport global : générer out/report.txt
-// 10. Indexation : générer out/index.txt (chemin, taille, date)
-// 11. Fusion : fusionner tous les fichiers → out/merged.txt
 func HandleChoiceB(extensionsConfig string, outDir string, defaultExt string) {
 	count := 0
+	totalWordCount := 0
+	totalWordLength := 0
+	totalLinesWithKeyword := 0
 	reader := bufio.NewReader(os.Stdin)
 
 	fmt.Print("Fournissez un nom de répertoire : ")
@@ -42,14 +40,41 @@ func HandleChoiceB(extensionsConfig string, outDir string, defaultExt string) {
 		return
 	}
 
+	fmt.Print("Fournissez un mot-clé à rechercher dans les lignes : ")
+	keywordInput, _ := reader.ReadString('\n')
+	keyword := strings.TrimSpace(keywordInput)
+
+	if keyword == "" {
+		fmt.Println("Aucun mot-clé fourni, utilisation de 'Lorem' comme mot-clé.")
+		keyword = "Lorem"
+	}
+
 	reportFile, err := os.Create(outDir + "/report.txt")
 	if err != nil {
-		fmt.Println("Erreur création fichier filtered.txt :", err)
+		fmt.Println("Erreur création fichier report.txt :", err)
 		return
 	}
 	defer reportFile.Close()
 
 	fmt.Println("Fichier report.txt créé avec succès.")
+
+	indexFile, err := os.Create(outDir + "/index.txt")
+	if err != nil {
+		fmt.Println("Erreur création fichier index.txt :", err)
+		return
+	}
+	defer indexFile.Close()
+
+	fmt.Println("Fichier index.txt créé avec succès.")
+
+	mergedFile, err := os.Create(outDir + "/merged.txt")
+	if err != nil {
+		fmt.Println("Erreur création fichier merged.txt :", err)
+		return
+	}
+	defer mergedFile.Close()
+
+	fmt.Println("Fichier merged.txt créé avec succès.")
 
 	error := filepath.WalkDir(repertoryPath, func(path string, d os.DirEntry, err error) error {
 		if err != nil {
@@ -73,7 +98,68 @@ func HandleChoiceB(extensionsConfig string, outDir string, defaultExt string) {
 
 			fmt.Fprintf(reportFile, "Fichier : %s\n", path)
 			fmt.Fprintf(reportFile, "Taille : %d octets\n", fileInfo.Size())
-			fmt.Fprintf(reportFile, "Date de modification : %s\n\n", fileInfo.ModTime().String())
+			fmt.Fprintf(reportFile, "Date de modification : %s\n", fileInfo.ModTime().String())
+
+			fmt.Fprintf(indexFile, "%s | %d octets | %s\n", path, fileInfo.Size(), fileInfo.ModTime().String())
+
+			file, err := os.Open(path)
+			if err != nil {
+				fmt.Fprintf(reportFile, "Erreur ouverture dufichier : %v\n\n", err)
+				return nil
+			}
+			defer file.Close()
+
+			var lines []string
+			scanner := bufio.NewScanner(file)
+			for scanner.Scan() {
+				lines = append(lines, scanner.Text())
+			}
+
+			if err := scanner.Err(); err != nil {
+				fmt.Fprintf(reportFile, "Erreur lecture du fichier : %v\n\n", err)
+				return nil
+			}
+
+			fmt.Fprintf(reportFile, "Nombre de lignes : %d\n", len(lines))
+
+			wordCount := 0
+			totalLength := 0
+
+			for _, line := range lines {
+				for word := range strings.FieldsSeq(line) {
+					if _, err := fmt.Sscanf(word, "%f", new(float64)); err != nil {
+						wordCount++
+						totalLength += len(word)
+					}
+				}
+			}
+
+			avgLength := 0
+			if wordCount > 0 {
+				avgLength = totalLength / wordCount
+			}
+
+			fmt.Fprintf(reportFile, "Nombre de mots (sans numériques) : %d\n", wordCount)
+			fmt.Fprintf(reportFile, "Longueur moyenne des mots : %d\n", avgLength)
+
+			totalWordCount += wordCount
+			totalWordLength += totalLength
+
+			lineCountWithKeyword := 0
+			for _, line := range lines {
+				if strings.Contains(line, keyword) {
+					lineCountWithKeyword++
+				}
+			}
+
+			fmt.Fprintf(reportFile, "Nombre de lignes contenant le mot-clé '%s' : %d\n\n", keyword, lineCountWithKeyword)
+			totalLinesWithKeyword += lineCountWithKeyword
+
+			fmt.Fprintf(mergedFile, "=== Contenu de %s ===\n", path)
+			for _, line := range lines {
+				fmt.Fprintln(mergedFile, line)
+			}
+			fmt.Fprintln(mergedFile, "")
 		}
 
 		return nil
@@ -84,5 +170,21 @@ func HandleChoiceB(extensionsConfig string, outDir string, defaultExt string) {
 		os.Exit(1)
 	}
 
-	fmt.Fprintf(reportFile, "Nombre de fichiers avec l'extension %s : %d\n\n", defaultExt, count)
+	fmt.Fprintf(reportFile, "=== RÉSUMÉ GLOBAL ===\n")
+	fmt.Fprintf(reportFile, "Nombre de fichiers avec l'extension %s : %d\n", defaultExt, count)
+	fmt.Fprintf(reportFile, "Total de mots (tous fichiers) : %d\n", totalWordCount)
+
+	globalAvgLength := 0
+	if totalWordCount > 0 {
+		globalAvgLength = totalWordLength / totalWordCount
+	}
+	fmt.Fprintf(reportFile, "Longueur moyenne globale des mots : %d\n", globalAvgLength)
+	fmt.Fprintf(reportFile, "Total de lignes contenant '%s' : %d\n", keyword, totalLinesWithKeyword)
+
+	fmt.Printf("\n=== Traitement terminé ===\n")
+	fmt.Printf("Fichiers traités : %d\n", count)
+	fmt.Printf("Fichiers générés dans ./%s :\n", outDir)
+	fmt.Println("  - report.txt (rapport détaillé)")
+	fmt.Println("  - index.txt (index des fichiers)")
+	fmt.Println("  - merged.txt (fusion des contenus)")
 }

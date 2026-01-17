@@ -1,0 +1,114 @@
+=== Contenu de out\filtered.txt ===
+Lorem Ipsum is simply dummy 
+industry. Lorem Ipsum has been the industry's 
+Lorem Ipsum passages, and more recently with desktop publishing 
+software like Aldus PageMaker including versions of Lorem Ipsum.
+
+=== Contenu de out\filtered_not.txt ===
+text of the 6327 printing and typesetting 
+standard dummy text ever since the 1500s,
+when an unknown printer took a galley of type and 
+scrambled it to make a type specimen book.
+It has survived not only five centuries,
+but also the leap into electronic typesetting, 
+remaining essentially 78878 unchanged. It was popularised 
+in the 1960s with the release of Letraset sheets containing 
+666
+
+=== Contenu de out\head.txt ===
+Lorem Ipsum is simply dummy 
+text of the 6327 printing and typesetting 
+industry. Lorem Ipsum has been the industry's 
+standard dummy text ever since the 1500s,
+when an unknown printer took a galley of type and 
+
+=== Contenu de out\index.txt ===
+out\filtered.txt | 206 octets | 2026-01-17 12:49:22.0549412 +0100 CET
+out\filtered_not.txt | 392 octets | 2026-01-17 12:49:22.0549412 +0100 CET
+out\head.txt | 212 octets | 2026-01-17 12:49:39.2887247 +0100 CET
+out\index.txt | 0 octets | 2026-01-17 18:54:04.3110025 +0100 CET
+
+=== Contenu de out\merged.txt ===
+=== Contenu de out\filtered.txt ===
+Lorem Ipsum is simply dummy 
+industry. Lorem Ipsum has been the industry's 
+Lorem Ipsum passages, and more recently with desktop publishing 
+software like Aldus PageMaker including versions of Lorem Ipsum.
+
+=== Contenu de out\filtered_not.txt ===
+text of the 6327 printing and typesetting 
+standard dummy text ever since the 1500s,
+when an unknown printer took a galley of type and 
+scrambled it to make a type specimen book.
+It has survived not only five centuries,
+but also the leap into electronic typesetting, 
+remaining essentially 78878 unchanged. It was popularised 
+in the 1960s with the release of Letraset sheets containing 
+666
+
+=== Contenu de out\head.txt ===
+Lorem Ipsum is simply dummy 
+text of the 6327 printing and typesetting 
+industry. Lorem Ipsum has been the industry's 
+standard dummy text ever since the 1500s,
+when an unknown printer took a galley of type and 
+
+=== Contenu de out\index.txt ===
+out\filtered.txt | 206 octets | 2026-01-17 12:49:22.0549412 +0100 CET
+out\filtered_not.txt | 392 octets | 2026-01-17 12:49:22.0549412 +0100 CET
+out\head.txt | 212 octets | 2026-01-17 12:49:39.2887247 +0100 CET
+out\index.txt | 0 octets | 2026-01-17 18:54:04.3110025 +0100 CET
+
+
+=== Contenu de out\report.txt ===
+Fichier : out\filtered.txt
+Taille : 206 octets
+Date de modification : 2026-01-17 12:49:22.0549412 +0100 CET
+Nombre de lignes : 4
+Nombre de mots (sans numériques) : 30
+Longueur moyenne des mots : 5
+Nombre de lignes contenant le mot-clé 'Lorem' : 4
+
+Fichier : out\filtered_not.txt
+Taille : 392 octets
+Date de modification : 2026-01-17 12:49:22.0549412 +0100 CET
+Nombre de lignes : 9
+Nombre de mots (sans numériques) : 59
+Longueur moyenne des mots : 5
+Nombre de lignes contenant le mot-clé 'Lorem' : 0
+
+Fichier : out\head.txt
+Taille : 212 octets
+Date de modification : 2026-01-17 12:49:39.2887247 +0100 CET
+Nombre de lignes : 5
+Nombre de mots (sans numériques) : 34
+Longueur moyenne des mots : 4
+Nombre de lignes contenant le mot-clé 'Lorem' : 2
+
+Fichier : out\index.txt
+Taille : 0 octets
+Date de modification : 2026-01-17 18:54:04.3110025 +0100 CET
+Nombre de lignes : 4
+Nombre de mots (sans numériques) : 20
+Longueur moyenne des mots : 5
+Nombre de lignes contenant le mot-clé 'Lorem' : 0
+
+Fichier : out\merged.txt
+Taille : 0 octets
+Date de modification : 2026-01-17 18:54:04.3110025 +0100 CET
+Nombre de lignes : 30
+Nombre de mots (sans numériques) : 163
+Longueur moyenne des mots : 5
+Nombre de lignes contenant le mot-clé 'Lorem' : 6
+
+Fichier : out\report.txt
+Taille : 0 octets
+Date de modification : 2026-01-17 18:54:04.3104915 +0100 CET
+
+=== Contenu de out\tail.txt ===
+remaining essentially 78878 unchanged. It was popularised 
+in the 1960s with the release of Letraset sheets containing 
+Lorem Ipsum passages, and more recently with desktop publishing 
+software like Aldus PageMaker including versions of Lorem Ipsum.
+666
+

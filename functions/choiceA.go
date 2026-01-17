@@ -56,8 +56,7 @@ func HandleChoiceA(defaultFile string, outDir string) {
 	fmt.Printf("Nombre de lignes dans le fichier : %d\n", len(lines))
 
 	for _, line := range lines {
-		words := strings.Fields(line)
-		for _, word := range words {
+		for word := range strings.FieldsSeq(line) {
 			if _, err := fmt.Sscanf(word, "%f", new(float64)); err != nil {
 				wordCount++
 				totalLength += len(word)

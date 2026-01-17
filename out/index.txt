@@ -1,0 +1,7 @@
+out\filtered.txt | 206 octets | 2026-01-17 12:49:22.0549412 +0100 CET
+out\filtered_not.txt | 392 octets | 2026-01-17 12:49:22.0549412 +0100 CET
+out\head.txt | 212 octets | 2026-01-17 12:49:39.2887247 +0100 CET
+out\index.txt | 0 octets | 2026-01-17 18:54:04.3110025 +0100 CET
+out\merged.txt | 0 octets | 2026-01-17 18:54:04.3110025 +0100 CET
+out\report.txt | 0 octets | 2026-01-17 18:54:04.3104915 +0100 CET
+out\tail.txt | 254 octets | 2026-01-17 12:49:39.2905399 +0100 CET

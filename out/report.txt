@@ -1,30 +1,61 @@
 Fichier : out\filtered.txt
 Taille : 206 octets
 Date de modification : 2026-01-17 12:49:22.0549412 +0100 CET
+Nombre de lignes : 4
+Nombre de mots (sans numériques) : 30
+Longueur moyenne des mots : 5
+Nombre de lignes contenant le mot-clé 'Lorem' : 4
 
 Fichier : out\filtered_not.txt
 Taille : 392 octets
 Date de modification : 2026-01-17 12:49:22.0549412 +0100 CET
+Nombre de lignes : 9
+Nombre de mots (sans numériques) : 59
+Longueur moyenne des mots : 5
+Nombre de lignes contenant le mot-clé 'Lorem' : 0
 
 Fichier : out\head.txt
 Taille : 212 octets
 Date de modification : 2026-01-17 12:49:39.2887247 +0100 CET
+Nombre de lignes : 5
+Nombre de mots (sans numériques) : 34
+Longueur moyenne des mots : 4
+Nombre de lignes contenant le mot-clé 'Lorem' : 2
 
 Fichier : out\index.txt
 Taille : 0 octets
-Date de modification : 2026-01-16 16:30:28.335102 +0100 CET
+Date de modification : 2026-01-17 18:54:04.3110025 +0100 CET
+Nombre de lignes : 4
+Nombre de mots (sans numériques) : 20
+Longueur moyenne des mots : 5
+Nombre de lignes contenant le mot-clé 'Lorem' : 0
 
 Fichier : out\merged.txt
 Taille : 0 octets
-Date de modification : 2026-01-16 16:30:28.334357 +0100 CET
+Date de modification : 2026-01-17 18:54:04.3110025 +0100 CET
+Nombre de lignes : 30
+Nombre de mots (sans numériques) : 163
+Longueur moyenne des mots : 5
+Nombre de lignes contenant le mot-clé 'Lorem' : 6
 
 Fichier : out\report.txt
 Taille : 0 octets
-Date de modification : 2026-01-17 17:52:20.7673944 +0100 CET
+Date de modification : 2026-01-17 18:54:04.3104915 +0100 CET
+Nombre de lignes : 43
+Nombre de mots (sans numériques) : 181
+Longueur moyenne des mots : 4
+Nombre de lignes contenant le mot-clé 'Lorem' : 5
 
 Fichier : out\tail.txt
 Taille : 254 octets
 Date de modification : 2026-01-17 12:49:39.2905399 +0100 CET
+Nombre de lignes : 5
+Nombre de mots (sans numériques) : 33
+Longueur moyenne des mots : 6
+Nombre de lignes contenant le mot-clé 'Lorem' : 2
 
+=== RÉSUMÉ GLOBAL ===
 Nombre de fichiers avec l'extension .txt : 7
-
+Total de mots (tous fichiers) : 520
+Longueur moyenne globale des mots : 5
+Total de lignes contenant 'Lorem' : 19
