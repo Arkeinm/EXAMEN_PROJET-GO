@@ -178,13 +178,8 @@ func HandleChoiceB(extensionsConfig string, outDir string, defaultExt string) {
 	if totalWordCount > 0 {
 		globalAvgLength = totalWordLength / totalWordCount
 	}
+
 	fmt.Fprintf(reportFile, "Longueur moyenne globale des mots : %d\n", globalAvgLength)
 	fmt.Fprintf(reportFile, "Total de lignes contenant '%s' : %d\n", keyword, totalLinesWithKeyword)
 
-	fmt.Printf("\n=== Traitement terminé ===\n")
-	fmt.Printf("Fichiers traités : %d\n", count)
-	fmt.Printf("Fichiers générés dans ./%s :\n", outDir)
-	fmt.Println("  - report.txt (rapport détaillé)")
-	fmt.Println("  - index.txt (index des fichiers)")
-	fmt.Println("  - merged.txt (fusion des contenus)")
 }

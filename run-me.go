@@ -3,9 +3,9 @@ package main
 import (
 	"bufio"
 	"fmt"
+	"myapp/functions"
 	"os"
 	"strings"
-	"myapp/functions"
 )
 
 func main() {
@@ -66,8 +66,8 @@ func main() {
 			break
 		}
 
-		if choice != "A" && choice != "B" {
-			fmt.Println("Choix invalide. Veuillez choisir A ou B.")
+		if choice != "A" && choice != "B" && choice != "C" {
+			fmt.Println("Choix invalide. Veuillez choisir A, B ou C.")
 			continue
 		}
 
@@ -76,6 +76,8 @@ func main() {
 			functions.HandleChoiceA(defaultFile, outDir)
 		case "B":
 			functions.HandleChoiceB(extensionsConfig, outDir, defaultExt)
+		case "C":
+			functions.HandleChoiceC()
 		}
 
 	}
