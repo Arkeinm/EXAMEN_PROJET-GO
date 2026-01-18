@@ -190,7 +190,8 @@ EVALUATION/
 
 ---
 
-## 🔧 Dépendances externes
-```bash
-go get github.com/PuerkitoBio/goquery
-```
+## 🔧 Dépendances
+
+Le projet utilise `github.com/PuerkitoBio/goquery` pour le parsing HTML.
+
+Les dépendances sont gérées automatiquement via `go.mod` et `go.sum`. Aucune installation manuelle n'est nécessaire - Go téléchargera automatiquement les dépendances au premier lancement.
