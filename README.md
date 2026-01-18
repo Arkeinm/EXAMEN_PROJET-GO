@@ -11,9 +11,9 @@ Niveau 16/20 - ProcessOps : gestion des processus Windows + macOS
 ## 🚀 Procédure d'exécution
 
 ### Prérequis
-- Go 1.18 ou supérieur
-- Accès à Internet (pour la fonctionnalité Wikipédia)
-- Droits administrateur/root (pour la terminaison de processus)
+- Go version 1.18 ou supérieur
+- Accès à Internet pour le choix C correspondant à la fonctionnalité Wikipédia
+- Droits administrateur/root pour la terminaison de processus
 
 ### Installation et lancement
 
@@ -143,7 +143,7 @@ Ils sont modifiables et utilisables selon vos attentes d'utilisation
 
 **4. Retour au menu principal**
 
-**Gestion d'erreurs complète :**
+**Gestion d'erreurs :**
 - ✅ PID invalide (non numérique)
 - ✅ Processus inexistant ou déjà terminé
 - ✅ Droits insuffisants (message pour exécuter en admin/root)
@@ -183,7 +183,7 @@ EVALUATION/
 
 ## 📝 Notes
 
-- Les fichiers de sortie sont créés dans le répertoire par défaut `out/` - SI vous n'avez pas changé le fichier `config.txt`
+- Les fichiers de sortie sont créés dans le répertoire par défaut `out/` - Si vous n'avez pas changé le fichier `config.txt`
 - Le programme détecte automatiquement le système d'exploitation
 - Les droits administrateur sont nécessaires pour terminer certains processus
 - Le mot-clé par défaut est "Lorem" à chacune des demandes si aucun n'est fourni
