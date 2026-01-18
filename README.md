@@ -1,150 +1,202 @@
-EXAMEN — PROJET GO
-FileOps / WebOps / ProcOps / SecureOps
-M1 Devops — Projet individuel – 16/01/2026
-Notation graduée : 10 / 13 / 16 / 18 (sur 20)
-________________________________________
-Objectif
-Développer un outil Go en console qui manipule des fichiers texte, récupère du contenu web (Wikipédia), gère les processus système, et ajoute des mécanismes de sécurité (droits / verrouillage) aux niveaux avancés.
-________________________________________
-Contraintes générales
-•	Go uniquement
-•	Standard library autorisée
-•	Bibliothèques externes autorisées uniquement lorsqu’elles sont imposées (Wikipédia)
-•	Le programme doit gérer les erreurs proprement
-•	Les fichiers générés doivent être écrits dans out/
-________________________________________
-Livrables du projet (idéalement lien vers github/gitlab, sinon zip)
-A rendre sur Cesar
-•	code source Go 
-•	config.txt - config.json
-•	data/ tous les fichiers d’input nécessaires
-•	out/ fichiers créés par votre programme
-•	README.md :
-o	Procédure d’exécution
-o	fonctionnalités implémentées
-o	niveau visé (10/13/16/18)
-o	Description du travail effectué
-________________________________________
-NIVEAU 10/20 — FileOps (fichiers & données) + config TXT
-1) Menu interactif
-•	menu en boucle + choix utilisateur + quitter
-2) Configuration au format .txt
-Au démarrage, le programme lit un fichier config.txt.
-Format imposé
-Fichier texte avec une clé par ligne :
-default_file=data/input.txt
-base_dir=data
-out_dir=out
-default_ext=.txt
-•	les lignes vides ou commençant par # sont ignorées
-•	si une clé manque, vous utilisez une valeur par défaut
-3) Fichier texte courant (fournir un ou plusieurs fichier - lorem ipsum par exemple)
-•	charger le fichier par défaut depuis la config
-•	possibilité de choisir un autre fichier via le menu
-•	vérifier existence et type (fichier)
-4) Liste des fonctionnalités – choix menu
-Sélectionnable depuis le menu Choix A et B
-Chaque choix exécutera toutes les sous-fonctionnalités décrites
-Le programme demandera à l’utilisateur un chemin. Si l’utilisateur ne le fourni pas => chemin par défaut dans le fichier de config.
-Choix A - Analyse sur fichier courant
-L’utilisateur fourni le nom d’un fichier
-1.	Infos fichier : taille, date création/modif, nb lignes
-2.	Stats mots : nb mots en ignorant les numériques + longueur moyenne
-3.	Compter lignes contenant un mot-clé
-4.	Filtrer lignes contenant un mot-clé demandé → out/filtered.txt
-5.	Filtrer lignes ne contenant pas le mot-clé demandé → out/filtered_not.txt
-6.	Head : N premières lignes → out/head.txt
-7.	Tail : N dernières lignes → out/tail.txt
-Choix B - Analyse multi-fichiers
-L’utilisateur fourni le nom d’un repertoire
-8.	Batch : analyser tous les .txt situé dans un emplacement demandé à l’utilisateur
-9.	Rapport global : générer out/report.txt (format libre mais lisible)
-10.	Indexation : générer out/index.txt listant (chemin, taille, date)
-11.	Fusion : fusionner tous les .txt de base_dir → out/merged.txt
-________________________________________
-NIVEAU 13/20 — WebOps : Wikipédia avec goquery
-Ajouter au menu :
-Choix C - Analyser une page Wikipédia
-Bibliothèque conseillée : goquery
-Installation :
+# EVALUATION - Projet FileOps & ProcessOps
+
+## 📋 Description du projet
+
+Ce projet implémente un système de gestion de fichiers et de processus en Go, avec plusieurs niveaux de fonctionnalités progressives. Il permet de manipuler des fichiers texte, analyser leur contenu, gérer des répertoires, récupérer des articles Wikipédia et gérer les processus système.
+
+## 🎯 Niveau visé
+
+Niveau 16/20 - ProcessOps : gestion des processus Windows + macOS
+
+## 🚀 Procédure d'exécution
+
+### Prérequis
+- Go 1.18 ou supérieur
+- Accès à Internet (pour la fonctionnalité Wikipédia)
+- Droits administrateur/root (pour la terminaison de processus)
+
+### Installation et lancement
+
+1. Cloner ou télécharger le projet
+2. Ouvrir un terminal dans le répertoire du projet
+3. Exécuter le programme :
+```bash
+go run run-me.go
+```
+
+Ou compiler puis exécuter :
+```bash
+go build run-me.go
+./run-me          # Linux/macOS
+run-me.exe        # Windows
+```
+
+### Configuration
+
+Le fichier `config.txt` contient les paramètres par défaut :
+- Fichier d'entrée par défaut : `data/input.txt`
+- Répertoire de sortie : `out/`
+- Extension de fichier par défaut : `.txt`
+
+Ils sont modifiables et utilisables selon vos attentes d'utilisation
+
+## ✨ Fonctionnalités implémentées
+
+### 📄 Choix A - FileOps : Analyse de fichier unique
+
+**Fonctionnalités :**
+- Saisie du nom de fichier (avec fichier par défaut si inexistant)
+- Affichage des métadonnées (taille, date de modification)
+- Comptage du nombre de lignes
+- Comptage des mots (exclusion des valeurs numériques)
+- Calcul de la longueur moyenne des mots
+- Recherche de mot-clé dans les lignes
+- Création de fichiers filtrés :
+  - `filtered.txt` : lignes contenant le mot-clé
+  - `filtered_not.txt` : lignes ne contenant pas le mot-clé
+- Extraction des N premières et dernières lignes :
+  - `head.txt` : N premières lignes
+  - `tail.txt` : N dernières lignes
+
+**Gestion d'erreurs :**
+- Fichier inexistant → utilisation du fichier par défaut
+- Nombre de lignes invalide → valeur par défaut de 4
+- Nombre > 1000 → message d'avertissement
+
+---
+
+### 📁 Choix B - DirOps : Analyse de répertoire
+
+**Fonctionnalités :**
+- Saisie du nom de répertoire (avec répertoire par défaut)
+- Saisie du mot-clé à rechercher
+- Parcours récursif du répertoire
+- Analyse de tous les fichiers `.txt`
+- Génération de trois fichiers de sortie :
+
+**1. `report.txt` :**
+- Métadonnées de chaque fichier (nom, taille, date)
+- Nombre de lignes
+- Nombre de mots (sans numériques)
+- Longueur moyenne des mots
+- Nombre de lignes contenant le mot-clé
+- Résumé global (total fichiers, mots, lignes avec mot-clé)
+
+**2. `index.txt` :**
+- Liste condensée : chemin | taille | date
+
+**3. `merged.txt` :**
+- Fusion du contenu de tous les fichiers analysés
+
+**Gestion d'erreurs :**
+- Répertoire inexistant → utilisation du répertoire par défaut
+- Chemin n'est pas un répertoire → message d'erreur
+- Erreur de lecture de fichier → message dans le rapport
+
+---
+
+### 🌐 Choix C - WebOps : Récupération et analyse d'articles Wikipédia
+
+**Fonctionnalités :**
+- Saisie du nom d'un article Wikipédia (exemple par défaut: `Go_(langage)`)
+- Téléchargement des données de la page Wikipédia voulu
+- Extraction du contenu des paragraphes grâce à la balise `<p>`
+- Recherche de mot-clé dans les paragraphes
+- Comptage des lignes contenant le mot-clé
+- Création du fichier `wiki_<nom_article>.txt` avec les paragraphes filtrés
+
+**Gestion d'erreurs :**
+- Article vide → utilisation de `Go_(langage)` par défaut
+- Page inexistante (erreur HTTP) → tentative avec article par défaut
+- Erreur de téléchargement → message d'erreur détaillé
+- Erreur de parsing HTML → message d'erreur
+
+**Dépendances :**
+- `github.com/PuerkitoBio/goquery` : parsing HTML
+
+---
+
+### ⚙️ Choix D - ProcessOps : Gestion des processus (Windows + macOS)
+
+**Sous-menu avec 4 options :**
+
+**1. Lister les processus (top N) :**
+- Demande du nombre de processus à afficher
+- Windows : utilise `tasklist /FO CSV`
+- macOS/Linux : utilise `ps -Ao pid,comm` ou `ps -eo pid,comm`
+- Affichage : PID + Nom du processus
+
+**2. Rechercher/filtrer un processus :**
+- Demande d'un mot-clé (ex: chrome, go, code)
+- Filtrage et affichage des processus correspondants
+- Recherche insensible à la casse
+
+**3. Terminer un processus (kill sécurisé) :**
+- Demande du PID
+- Vérification de l'existence du processus
+- Affichage du récapitulatif (PID + nom)
+- Demande de confirmation explicite (yes/no)
+- Option de forçage :
+  - Windows : `taskkill /PID <pid> /T /F`
+  - macOS/Linux : `kill -9 <pid>`
+- Annulation possible à tout moment
+
+**4. Retour au menu principal**
+
+**Gestion d'erreurs complète :**
+- ✅ PID invalide (non numérique)
+- ✅ Processus inexistant ou déjà terminé
+- ✅ Droits insuffisants (message pour exécuter en admin/root)
+- ✅ Commandes non disponibles (`tasklist`, `ps`, `kill`, etc.)
+- ✅ Détection automatique de l'OS (Windows/macOS/Linux)
+
+---
+
+## 📂 Structure du projet
+```
+EVALUATION/
+├── data/
+│   └── input.txt              # Fichier d'entrée par défaut
+├── functions/
+│   ├── choiceA.go            # Analyse de fichier unique
+│   ├── choiceB.go            # Analyse de répertoire
+│   ├── choiceC.go            # Récupération Wikipédia
+│   └── choiceD.go            # Gestion des processus
+├── out/                       # Répertoire de sortie (fichiers générés)
+│   ├── filtered.txt
+│   ├── filtered_not.txt
+│   ├── head.txt
+│   ├── tail.txt
+│   ├── report.txt
+│   ├── index.txt
+│   ├── merged.txt
+│   ├── wiki_Go_(langage).txt
+|   └── wiki_Google.txt
+├── config.txt                 # Configuration du programme
+├── go.mod                     # Dépendances Go
+├── go.sum                     # Checksums des dépendances
+├── run-me.go                  # Point d'entrée du programme
+└── README.md                  # Ce fichier
+```
+
+---
+
+## 📝 Notes
+
+- Les fichiers de sortie sont créés dans le répertoire `out/` mais vous pouvez modifier le fichier `config.txt` à votre guise
+- Le programme détecte automatiquement le système d'exploitation
+- Les droits administrateur sont nécessaires pour terminer certains processus
+- Le mot-clé par défaut est "Lorem" à chacune des demandes si aucun n'est fourni
+
+---
+
+## 🔧 Dépendances externes
+```bash
 go get github.com/PuerkitoBio/goquery
-Comportement attendu
-1.	demander un article (ex: Go_(langage))
-2.	télécharger :
-https://fr.wikipedia.org/wiki/<ARTICLE>
-3.	extraire le texte des paragraphes
-4.	appliquer au moins 2 traitements déjà présents (mots / filtres / stats)
-5.	écrire dans out/wiki_<article>.txt (ou afficher)
-Bonus : possibilité de traiter plusieurs articles en même temps.
-Extraction HTML via regex déconseillée.
-________________________________________
-NIVEAU 16/20 — ProcOps : gestion des processus Windows + macOS
-Ce niveau doit fonctionner sur Windows et sur macOS.
-Piste : OS-aware (détection runtime.GOOS).
-Fonctionnalités ajoutée au menu principal :
-Choix D . Créer un sous-menu ProcessOps :
-1) Lister les processus (top N)
-•	Windows : utiliser tasklist (par ex. tasklist /FO CSV)
-•	macOS : utiliser ps -Ao pid,comm
-Afficher au minimum : PID + nom.
-2) Rechercher / filtrer
-•	demander un mot (ex: “chrome”, “go”, “code”)
-•	afficher les processus correspondants
-3) Kill sécurisé
-•	demander un PID
-•	afficher un récapitulatif (PID + nom si possible)
-•	demander une confirmation explicite (yes/no)
-•	exécuter :
-o	Windows : taskkill /PID <pid> /T (et éventuellement /F en option)
-o	macOS : kill <pid> (option avancée : kill -9)
-4) Gestion d’erreurs
-•	PID invalide
-•	droits insuffisants
-•	process déjà terminé
-•	commande non disponible
-________________________________________
-NIVEAU 18/20 — SecureOps + config JSON + droits + verrouillage
-À ce niveau :
-1.	la configuration doit être migrée vers JSON
-2.	vous ajoutez une fonctionnalité de gestion des droits / verrouillage
-________________________________________
-A) Configuration en JSON
-Remplacer config.txt par config.json.
-Exemple :
-{
-  "default_file": "data/input.txt",
-  "base_dir": "data",
-  "out_dir": "out",
-  "default_ext": ".txt",
-  "wiki_lang": "fr",
-  "process_top_n": 10
-}
-Le programme doit accepter un flag optionnel :
-•	--config config.json
-________________________________________
-Choix E Gestion des droits
-Ajouter au menu “SecureOps” une option :
-Verrouiller / Déverrouiller un fichier
-Objectif : empêcher l’écriture concurrente (ou simuler un verrou).
-Deux options acceptées :
-Option 1 (recommandée, portable, simple) : Lockfile
-•	créer un fichier out/<nom>.lock
-•	si le lock existe → fichier considéré “verrouillé”
-•	déverrouiller = supprimer le lock
-•	avantage : marche partout, simple à corriger
-Option 2 (avancée, vraie lock OS - Bonus) : File lock OS
-•	macOS/Linux : syscall.Flock
-•	Windows : LockFileEx via syscall
-•	plus complexe...
+```
 
-________________________________________
-C) Bonus sécurité (au choix, mais “système”)
-Ajouter au moins 1 :
-•	rendre un fichier “read-only” (si OS le permet) via os.Chmod (macOS) / attribut Windows via commande
-•	vérifier permissions (macOS) et signaler WARN
-•	journaliser les actions sensibles (kill, lock) dans out/audit.log
-•	Toute action destructive (kill, lock) doit être confirmée et loggée dans out/audit.log (fortement recommandé)
+---
 
+## 👨‍💻 Auteur
 
-BONUS : Dockeriser ?
-
+Projet réalisé dans le cadre de l'évaluation Go - jusqu'au niveau 16/20
