@@ -9,10 +9,6 @@ import (
 )
 
 func HandleChoiceB(extensionsConfig string, outDir string, defaultExt string) {
-	count := 0
-	totalWordCount := 0
-	totalWordLength := 0
-	totalLinesWithKeyword := 0
 	reader := bufio.NewReader(os.Stdin)
 
 	fmt.Print("Fournissez un nom de répertoire : ")
@@ -76,6 +72,11 @@ func HandleChoiceB(extensionsConfig string, outDir string, defaultExt string) {
 
 	fmt.Println("Fichier merged.txt créé avec succès.")
 
+	count := 0
+	totalWordCount := 0
+	totalWordLength := 0
+	totalLinesWithKeyword := 0
+
 	error := filepath.WalkDir(repertoryPath, func(path string, d os.DirEntry, err error) error {
 		if err != nil {
 			return nil
@@ -104,7 +105,7 @@ func HandleChoiceB(extensionsConfig string, outDir string, defaultExt string) {
 
 			file, err := os.Open(path)
 			if err != nil {
-				fmt.Fprintf(reportFile, "Erreur ouverture dufichier : %v\n\n", err)
+				fmt.Fprintf(reportFile, "Erreur ouverture du fichier : %v\n\n", err)
 				return nil
 			}
 			defer file.Close()
@@ -181,5 +182,4 @@ func HandleChoiceB(extensionsConfig string, outDir string, defaultExt string) {
 
 	fmt.Fprintf(reportFile, "Longueur moyenne globale des mots : %d\n", globalAvgLength)
 	fmt.Fprintf(reportFile, "Total de lignes contenant '%s' : %d\n", keyword, totalLinesWithKeyword)
-
 }

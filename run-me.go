@@ -56,7 +56,7 @@ func main() {
 
 	for {
 		fmt.Println("/!\\ Pour arrêter le programme, appuyez sur la touche 'Entrée' sans rien taper. /!\\")
-		fmt.Print("Quel choix veux-tu faire ? (A ou B) : ")
+		fmt.Print("Quel choix veux-tu faire ? (A, B ou C) : ")
 
 		input, _ := reader.ReadString('\n')
 		choice := strings.TrimSpace(input)
@@ -77,7 +77,7 @@ func main() {
 		case "B":
 			functions.HandleChoiceB(extensionsConfig, outDir, defaultExt)
 		case "C":
-			functions.HandleChoiceC()
+			functions.HandleChoiceC(outDir)
 		}
 
 	}

@@ -9,13 +9,6 @@ import (
 )
 
 func HandleChoiceA(defaultFile string, outDir string) {
-	var lines []string
-
-	wordCount := 0
-	totalLength := 0
-	avgLength := 0
-	lineCountWithKeyword := 0
-
 	reader := bufio.NewReader(os.Stdin)
 
 	fmt.Print("Fournissez un nom de fichier : ")
@@ -43,6 +36,7 @@ func HandleChoiceA(defaultFile string, outDir string) {
 	}
 	defer file.Close()
 
+	var lines []string
 	scanner := bufio.NewScanner(file)
 	for scanner.Scan() {
 		lines = append(lines, scanner.Text())
@@ -55,6 +49,9 @@ func HandleChoiceA(defaultFile string, outDir string) {
 
 	fmt.Printf("Nombre de lignes dans le fichier : %d\n", len(lines))
 
+	wordCount := 0
+	totalLength := 0
+
 	for _, line := range lines {
 		for word := range strings.FieldsSeq(line) {
 			if _, err := fmt.Sscanf(word, "%f", new(float64)); err != nil {
@@ -64,6 +61,7 @@ func HandleChoiceA(defaultFile string, outDir string) {
 		}
 	}
 
+	avgLength := 0
 	if wordCount > 0 {
 		avgLength = totalLength / wordCount
 	}
@@ -80,6 +78,7 @@ func HandleChoiceA(defaultFile string, outDir string) {
 		keyword = "Lorem"
 	}
 
+	lineCountWithKeyword := 0
 	for _, line := range lines {
 		if strings.Contains(line, keyword) {
 			lineCountWithKeyword++
@@ -131,7 +130,6 @@ func HandleChoiceA(defaultFile string, outDir string) {
 		}
 
 		headFile, err := os.Create(outDir + "/head.txt")
-
 		if err != nil {
 			fmt.Println("Erreur création fichier head.txt :", err)
 			return
@@ -143,7 +141,6 @@ func HandleChoiceA(defaultFile string, outDir string) {
 		}
 
 		tailFile, err := os.Create(outDir + "/tail.txt")
-
 		if err != nil {
 			fmt.Println("Erreur création fichier tail.txt :", err)
 			return
