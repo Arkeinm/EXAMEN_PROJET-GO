@@ -195,3 +195,7 @@ EVALUATION/
 Le projet utilise `github.com/PuerkitoBio/goquery` pour le parsing HTML.
 
 Les dépendances sont gérées automatiquement via `go.mod` et `go.sum`. Aucune installation manuelle n'est nécessaire - Go téléchargera automatiquement les dépendances au premier lancement.
+
+## Améliorations possibles
+
+Je pense que les fonctionalités faites dans le choix A peuvent être misent dans des fonctions afin d'être plus facilement réutilisé dans les choix B et C.

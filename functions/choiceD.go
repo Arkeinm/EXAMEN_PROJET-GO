@@ -228,7 +228,7 @@ func killProcess(reader *bufio.Reader) {
 	fmt.Printf("  PID  : %d\n", pid)
 	fmt.Printf("  Nom  : %s\n", processName)
 
-	fmt.Print("\nConfirmez-vous la terminaison de ce processus ? (yes/no) : ")
+	fmt.Print("\nConfirmez-vous la fermeture de ce processus ? (yes/no) : ")
 	confirmInput, _ := reader.ReadString('\n')
 	confirmation := strings.TrimSpace(strings.ToLower(confirmInput))
 
@@ -237,7 +237,7 @@ func killProcess(reader *bufio.Reader) {
 		return
 	}
 
-	fmt.Print("Voulez-vous forcer la terminaison ? (yes/no) : ")
+	fmt.Print("Voulez-vous forcer la fermeture ? (yes/no) : ")
 	forceInput, _ := reader.ReadString('\n')
 	force := strings.TrimSpace(strings.ToLower(forceInput)) == "yes"
 
@@ -245,7 +245,7 @@ func killProcess(reader *bufio.Reader) {
 
 	if err != nil {
 		errMsg := err.Error()
-		fmt.Printf("Erreur lors de la terminaison du processus : %v\n", err)
+		fmt.Printf("Erreur lors de la fermeture du processus : %v\n", err)
 		
 		if strings.Contains(errMsg, "Access is denied") || strings.Contains(errMsg, "Operation not permitted") {
 			fmt.Println("Droits insuffisants. Essayez d'exécuter le programme en tant qu'administrateur/root.")
