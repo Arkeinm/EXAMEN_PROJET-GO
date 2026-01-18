@@ -56,7 +56,7 @@ func main() {
 
 	for {
 		fmt.Println("/!\\ Pour arrêter le programme, appuyez sur la touche 'Entrée' sans rien taper. /!\\")
-		fmt.Print("Quel choix veux-tu faire ? (A, B ou C) : ")
+		fmt.Print("Quel choix veux-tu faire ? (A, B, C ou D) : ")
 
 		input, _ := reader.ReadString('\n')
 		choice := strings.TrimSpace(input)
@@ -66,8 +66,8 @@ func main() {
 			break
 		}
 
-		if choice != "A" && choice != "B" && choice != "C" {
-			fmt.Println("Choix invalide. Veuillez choisir A, B ou C.")
+		if choice != "A" && choice != "B" && choice != "C" && choice != "D" {
+			fmt.Println("Choix invalide. Veuillez choisir A, B, C ou D.")
 			continue
 		}
 
@@ -78,8 +78,8 @@ func main() {
 			functions.HandleChoiceB(extensionsConfig, outDir, defaultExt)
 		case "C":
 			functions.HandleChoiceC(outDir)
+		case "D":
+			functions.HandleChoiceD()
 		}
-
 	}
-
 }
