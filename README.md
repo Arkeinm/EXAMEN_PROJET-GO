@@ -2,7 +2,7 @@
 
 ## 📋 Description du projet
 
-Ce projet implémente un système de gestion de fichiers et de processus en Go, avec plusieurs niveaux de fonctionnalités progressives. Il permet de manipuler des fichiers texte, analyser leur contenu, gérer des répertoires, récupérer des articles Wikipédia et gérer les processus système.
+Ce projet implémente un système de gestion de fichiers et de processus avec l'utilisation du langage Go. Il contient plusieurs niveaux de fonctionnalités progressives, comme par exemple la manipulation des fichiers texte, analyser leur contenu, gérer des répertoires, récupérer des articles Wikipédia et gérer les processus système.
 
 ## 🎯 Niveau visé
 
@@ -183,7 +183,7 @@ EVALUATION/
 
 ## 📝 Notes
 
-- Les fichiers de sortie sont créés dans le répertoire `out/` mais vous pouvez modifier le fichier `config.txt` à votre guise
+- Les fichiers de sortie sont créés dans le répertoire par défaut `out/` - SI vous n'avez pas changé le fichier `config.txt`
 - Le programme détecte automatiquement le système d'exploitation
 - Les droits administrateur sont nécessaires pour terminer certains processus
 - Le mot-clé par défaut est "Lorem" à chacune des demandes si aucun n'est fourni
@@ -194,9 +194,3 @@ EVALUATION/
 ```bash
 go get github.com/PuerkitoBio/goquery
 ```
-
----
-
-## 👨‍💻 Auteur
-
-Projet réalisé dans le cadre de l'évaluation Go - jusqu'au niveau 16/20
